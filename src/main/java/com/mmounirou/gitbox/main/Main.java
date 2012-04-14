@@ -3,35 +3,96 @@ package com.mmounirou.gitbox.main;
 import java.io.File;
 import java.io.IOException;
 
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.Option;
+import org.apache.commons.cli.OptionBuilder;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
+import org.apache.commons.cli.PosixParser;
 import org.apache.commons.configuration.ConfigurationException;
+import org.apache.log4j.Logger;
+import org.eclipse.jgit.lib.Constants;
 
 import com.mmounirou.gitbox.GitBox;
 import com.mmounirou.gitbox.core.GitBoxConfiguration;
 import com.mmounirou.gitbox.core.GitRepository;
 import com.mmounirou.gitbox.exception.GitBoxException;
 
+@SuppressWarnings("static-access")
 public class Main
 {
+	private static Logger logger = Logger.getLogger(Main.class);
+
+	//@formatter:off
+	private static final Option WORK_TREE = OptionBuilder.isRequired().hasArg().withType(File.class).withLongOpt("work-tree").withDescription("git working directory").create("w");
+	private static final Option GIT_DIR = OptionBuilder.isRequired(false).hasArg().withType(File.class).withLongOpt("git-dir").withDescription("git directory").create("g");
+	private static final Option CONFIG_FILE = OptionBuilder.isRequired(false).hasArg().withType(File.class).withLongOpt("properties").withDescription("gitbox properties file").create("p");
+	//@formatter:on
+
+	private static final Options OPTIONS = buildOptions();
 
 	private Main()
 	{
 		throw new AssertionError();
 	}
 
+	private static Options buildOptions()
+	{
+		Options result = new Options();
+
+		result.addOption(WORK_TREE);
+		result.addOption(GIT_DIR);
+		result.addOption(CONFIG_FILE);
+
+		return result;
+	}
+
 	public static void main(String[] args) throws GitBoxException, IOException, ConfigurationException
 	{
-		File gitDir = new File("");
-		File workTree = new File("");
-		File configurationFile = new File("");
 
-		final GitRepository gitRepository = new GitRepository(gitDir, workTree);
-		gitRepository.addObserver(new LogObserver());
+		try
+		{
+			CommandLine commandLine = new PosixParser().parse(OPTIONS, args);
+			File workTree = (File) commandLine.getParsedOptionValue(WORK_TREE.getOpt());
 
-		final GitBoxConfiguration gitBoxConfiguration = new GitBoxConfiguration(configurationFile);
-		final GitBox gitbox = new GitBox(gitBoxConfiguration, gitRepository);
+			File gitDir;
+			GitBoxConfiguration gitBoxConfiguration;
 
-		gitbox.start();
+			if (commandLine.hasOption(GIT_DIR.getOpt()))
+			{
+				gitDir = (File) commandLine.getParsedOptionValue(WORK_TREE.getOpt());
+			} else
+			{
+				gitDir = new File(workTree, Constants.DOT_GIT);
+			}
 
+			if (commandLine.hasOption(CONFIG_FILE.getOpt()))
+			{
+				gitBoxConfiguration = new GitBoxConfiguration((File) commandLine.getParsedOptionValue(CONFIG_FILE.getOpt()));
+			} else
+			{
+				gitBoxConfiguration = new GitBoxConfiguration();
+			}
+
+			final GitRepository gitRepository = new GitRepository(gitDir, workTree);
+			gitRepository.addObserver(new LogObserver());
+
+			final GitBox gitbox = new GitBox(gitBoxConfiguration, gitRepository);
+			gitbox.start();
+
+		} catch (ParseException e)
+		{
+			logger.error(e.getMessage());
+			printUsage();
+		}
+
+	}
+
+	private static void printUsage()
+	{
+		HelpFormatter formatter = new HelpFormatter();
+		formatter.printHelp("gitbox", OPTIONS);
 	}
 
 }
