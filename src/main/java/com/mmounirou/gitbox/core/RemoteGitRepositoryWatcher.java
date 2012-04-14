@@ -63,12 +63,12 @@ public class RemoteGitRepositoryWatcher
 		Timer pullTimer = new Timer(true);
 		TimerTask pullTask = new PullTask(gitRepository);
 		long pullPeriod = gitBoxConfiguration.getPullPeriodInSeconds();
-		pullTimer.scheduleAtFixedRate(pullTask, 0, TimeUnit.MILLISECONDS.convert(pullPeriod, TimeUnit.MINUTES));
+		pullTimer.scheduleAtFixedRate(pullTask, 0, TimeUnit.MILLISECONDS.convert(pullPeriod, TimeUnit.SECONDS));
 
 		Timer pushTimer = new Timer(true);
 		TimerTask pushTask = new PushTask(gitRepository);
 		long pushPeriod = gitBoxConfiguration.getPushPeriodInSeconds();
-		pushTimer.scheduleAtFixedRate(pushTask, 0, TimeUnit.MILLISECONDS.convert(pushPeriod, TimeUnit.MINUTES));
+		pushTimer.scheduleAtFixedRate(pushTask, 0, TimeUnit.MILLISECONDS.convert(pushPeriod, TimeUnit.SECONDS));
 
 	}
 
