@@ -1,6 +1,7 @@
 package com.mmounirou.gitbox.core;
 
 import java.io.File;
+import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Nonnull;
 
@@ -42,7 +43,6 @@ public class LocalGitRepositoryWatcher
 			repository.updateFile(toFile(event));
 		}
 
-		
 		private File toFile(@Nonnull FileChangeEvent event) throws FileSystemException
 		{
 			FileObject fileObject = event.getFile();
@@ -63,6 +63,9 @@ public class LocalGitRepositoryWatcher
 
 	public void start() throws WrappedGitBoxException
 	{
+		//TODO exclude git dir from monitoring
+		//TODO the delay gived to the monitor is : 1 second for every 1000 files processed ; so convert the user delay to this unit
+
 		try
 		{
 			FileSystemManager fsManager = VFS.getManager();
@@ -70,7 +73,8 @@ public class LocalGitRepositoryWatcher
 
 			DefaultFileMonitor fm = new DefaultFileMonitor(new GitListener(gitRepository));
 			fm.setRecursive(true);
-			fm.setDelay(gitBoxConfiguration.getDelayForLocalChangeCheck());
+			long checkPeriod = gitBoxConfiguration.getDelayForLocalChangeCheckInSeconds();
+			fm.setDelay(TimeUnit.MILLISECONDS.convert(checkPeriod, TimeUnit.SECONDS));
 			fm.addFile(listendir);
 			fm.start();
 

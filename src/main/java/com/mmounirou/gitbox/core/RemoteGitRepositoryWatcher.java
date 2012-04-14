@@ -2,9 +2,9 @@ package com.mmounirou.gitbox.core;
 
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Nonnull;
-
 
 public class RemoteGitRepositoryWatcher
 {
@@ -62,13 +62,13 @@ public class RemoteGitRepositoryWatcher
 	{
 		Timer pullTimer = new Timer(true);
 		TimerTask pullTask = new PullTask(gitRepository);
-		long pullPeriod = gitBoxConfiguration.getPullPeriod();
-		pullTimer.scheduleAtFixedRate(pullTask, 0, pullPeriod);
+		long pullPeriod = gitBoxConfiguration.getPullPeriodInSeconds();
+		pullTimer.scheduleAtFixedRate(pullTask, 0, TimeUnit.MILLISECONDS.convert(pullPeriod, TimeUnit.MINUTES));
 
 		Timer pushTimer = new Timer(true);
 		TimerTask pushTask = new PushTask(gitRepository);
-		long pushPeriod = gitBoxConfiguration.getPushPeriod();
-		pushTimer.scheduleAtFixedRate(pushTask, 0, pushPeriod);
+		long pushPeriod = gitBoxConfiguration.getPushPeriodInSeconds();
+		pushTimer.scheduleAtFixedRate(pushTask, 0, TimeUnit.MILLISECONDS.convert(pushPeriod, TimeUnit.MINUTES));
 
 	}
 

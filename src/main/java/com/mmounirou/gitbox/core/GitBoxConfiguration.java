@@ -1,24 +1,39 @@
 package com.mmounirou.gitbox.core;
 
+import java.io.File;
+
+import javax.annotation.Nonnull;
+
+import org.apache.commons.configuration.ConfigurationException;
+import org.apache.commons.configuration.PropertiesConfiguration;
+import org.apache.commons.configuration.reloading.FileChangedReloadingStrategy;
+
 public class GitBoxConfiguration
 {
 
-	public long getDelayForLocalChangeCheck()
+	private PropertiesConfiguration configuration;
+
+	public GitBoxConfiguration(@Nonnull File configurationFile) throws ConfigurationException
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		configuration = new PropertiesConfiguration(configurationFile);
+		configuration.setAutoSave(true);
+		configuration.setReloadingStrategy(new FileChangedReloadingStrategy());
 	}
 
-	public long getPullPeriod()
+	public long getDelayForLocalChangeCheckInSeconds()
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		return configuration.getLong(Constants.DELAY_BETWEEN_LOCAL_CHECK_IN_SECONDS, Constants.DEFAULT_DELAY_BETWEEN_LOCAL_CHECK_IN_SECONDS);
 	}
 
-	public long getPushPeriod()
+	public long getPullPeriodInSeconds()
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		return configuration.getLong(Constants.DELAY_BETWEEN_PULL_IN_SECONDS, Constants.DEFAULT_DELAY_BETWEEN_PULL_IN_SECONDS);
+
+	}
+
+	public long getPushPeriodInSeconds()
+	{
+		return configuration.getLong(Constants.DELAY_BETWEEN_PUSH_IN_SECONDS, Constants.DEFAULT_DELAY_BETWEEN_PUSH_IN_SECONDS);
 	}
 
 }
