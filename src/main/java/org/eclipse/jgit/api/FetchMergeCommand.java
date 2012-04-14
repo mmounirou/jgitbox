@@ -82,10 +82,10 @@ public class FetchMergeCommand extends PullCommand
 	private FetchResult fetchRes;
 	private String remoteBranchName;
 	private final static String DOT = ".";
-	String branchName;
+	private String branchName;
 	private boolean isRemote;
 	private String remote;
-	String remoteUri;
+	private String remoteUri;
 
 	public FetchMergeCommand(Repository repo)
 	{

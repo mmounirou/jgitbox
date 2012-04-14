@@ -21,4 +21,8 @@ public interface GitRepositoryObserver
 
 	void onErrorDuringPull();
 
+	void onPush();
+
+	void onErrorDuringPush();
+
 }

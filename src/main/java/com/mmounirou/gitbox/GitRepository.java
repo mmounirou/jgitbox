@@ -135,7 +135,35 @@ public class GitRepository extends GitRepositoryObservable
 
 	public void push(String strRemote)
 	{
-		// TODO Auto-generated method stub
+
+		//don't execute an push and a pull //
+		remoteExecutorService.execute(new Runnable()
+		{
+
+			public void run()
+			{
+				//don't execute a push and a add/remote/delete operation
+				executorService.execute(new Runnable()
+				{
+
+					public void run()
+					{
+						try
+						{
+							git.push().setForce(true).call();
+							firePush();
+						} catch (RuntimeException e)
+						{
+							throw e;
+						} catch (Exception e)
+						{
+							fireErrorDuringPush(e);
+						}
+					}
+
+				});
+			}
+		});
 
 	}
 
