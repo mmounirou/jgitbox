@@ -1,41 +1,120 @@
 package com.mmounirou.gitbox;
 
 import java.io.File;
+import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+import com.google.common.collect.Maps;
 
 public class GitRepositoryObservable
 {
-	protected void fireFileAdded(File file)
+	private static interface CustomRunnable
 	{
+		void run(GitRepositoryObserver listener);
+	}
+
+	// Notify each listener sequentially but in a separate thread
+	private final Map<GitRepositoryObserver, ExecutorService> listeners = Maps.newLinkedHashMap();
+
+	public void addListener(GitRepositoryObserver observer)
+	{
+		listeners.put(observer, Executors.newSingleThreadExecutor());
+	}
+
+	public void removeListener(GitRepositoryObserver observer)
+	{
+		ExecutorService executorService = listeners.remove(observer);
+		executorService.shutdown();
+	}
+
+	protected void fireFileAdded(final File file)
+	{
+		notifyListeners(new CustomRunnable()
+		{
+
+			public void run(GitRepositoryObserver listener)
+			{
+				listener.onFileAdded(file);
+			}
+		});
+	}
+
+	protected void fireErrorDuringFileAdd(final File file, final Exception e)
+	{
+		notifyListeners(new CustomRunnable()
+		{
+
+			public void run(GitRepositoryObserver listener)
+			{
+				listener.onErrorDuringFileAdd(file, e);
+			}
+		});
 
 	}
 
-	protected void fireErrorDuringFileAdd(File file, Exception e)
+	protected void fireFileUpdated(final File file)
 	{
-		// TODO Auto-generated method stub
+		notifyListeners(new CustomRunnable()
+		{
 
+			public void run(GitRepositoryObserver listener)
+			{
+				listener.onFileUpdated(file);
+			}
+		});
 	}
 
-	protected void fireFileUpdated(File file)
+	protected void fireErrorDuringFileUpdate(final File file, final Exception e)
 	{
-		// TODO Auto-generated method stub
+		notifyListeners(new CustomRunnable()
+		{
 
+			public void run(GitRepositoryObserver listener)
+			{
+				listener.onErrorDuringFileUpdate(file, e);
+			}
+		});
 	}
 
-	protected void fireErrorDuringFileUpdate(File file, Exception e)
+	protected void fireFileDeleted(final File file)
 	{
-		// TODO Auto-generated method stub
+		notifyListeners(new CustomRunnable()
+		{
 
+			public void run(GitRepositoryObserver listener)
+			{
+				listener.onFileDeleted(file);
+			}
+		});
 	}
 
-	protected void fireFileDeleted(File file)
+	protected void fireErrorDuringFileDelete(final File file, final Exception e)
 	{
-		// TODO Auto-generated method stub
+		notifyListeners(new CustomRunnable()
+		{
 
+			public void run(GitRepositoryObserver listener)
+			{
+				listener.onErrorDuringFileDelete(file, e);
+			}
+		});
 	}
 
-	protected void fireErrorDuringFileDelete(File file, Exception e)
+	private void notifyListeners(final CustomRunnable command)
 	{
-		// TODO Auto-generated method stub
+		for (final GitRepositoryObserver listener : listeners.keySet())
+		{
+			ExecutorService executorService = listeners.get(listener);
+			executorService.execute(new Runnable()
+			{
 
+				public void run()
+				{
+					command.run(listener);
+				}
+			});
+		}
 	}
+
 }

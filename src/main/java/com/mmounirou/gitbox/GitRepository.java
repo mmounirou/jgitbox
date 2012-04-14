@@ -14,7 +14,7 @@ import org.eclipse.jgit.lib.RepositoryBuilder;
 public class GitRepository extends GitRepositoryObservable
 {
 	private final ExecutorService executorService = Executors.newSingleThreadExecutor();
-
+	
 	private final Git git;
 	private final File gitDirectory;
 	private final File workTree;
