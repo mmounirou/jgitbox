@@ -25,6 +25,8 @@ public class Main
 		File configurationFile = new File("");
 
 		final GitRepository gitRepository = new GitRepository(gitDir, workTree);
+		gitRepository.addObserver(new LogObserver());
+
 		final GitBoxConfiguration gitBoxConfiguration = new GitBoxConfiguration(configurationFile);
 		final GitBox gitbox = new GitBox(gitBoxConfiguration, gitRepository);
 

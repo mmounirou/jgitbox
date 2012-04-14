@@ -19,12 +19,12 @@ public class GitRepositoryObservable
 	// Notify each listener sequentially but in a separate thread
 	private final Map<GitRepositoryObserver, ExecutorService> listeners = Maps.newLinkedHashMap();
 
-	public void addListener(@Nonnull GitRepositoryObserver observer)
+	public void addObserver(@Nonnull GitRepositoryObserver observer)
 	{
 		listeners.put(observer, Executors.newSingleThreadExecutor());
 	}
 
-	public void removeListener(@Nonnull GitRepositoryObserver observer)
+	public void removeObserver(@Nonnull GitRepositoryObserver observer)
 	{
 		ExecutorService executorService = listeners.remove(observer);
 		executorService.shutdown();
