@@ -11,7 +11,6 @@ import org.apache.commons.vfs2.FileObject;
 import org.apache.commons.vfs2.FileSystemException;
 import org.apache.commons.vfs2.FileSystemManager;
 import org.apache.commons.vfs2.VFS;
-import org.apache.commons.vfs2.impl.DefaultFileMonitor;
 
 import com.mmounirou.gitbox.exception.WrappedGitBoxException;
 import com.mmounirou.gitbox.utils.FilterableFileMonitor;
@@ -22,6 +21,7 @@ public class LocalGitRepositoryWatcher
 	private static class GitListener implements FileListener
 	{
 
+		//TODO do not notify for directory
 		private final GitRepository repository;
 
 		public GitListener(GitRepository gitRepository)
