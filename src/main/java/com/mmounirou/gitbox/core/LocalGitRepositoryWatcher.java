@@ -14,6 +14,7 @@ import org.apache.commons.vfs2.VFS;
 import org.apache.commons.vfs2.impl.DefaultFileMonitor;
 
 import com.mmounirou.gitbox.exception.WrappedGitBoxException;
+import com.mmounirou.gitbox.utils.FilterableFileMonitor;
 
 public class LocalGitRepositoryWatcher
 {
@@ -25,7 +26,7 @@ public class LocalGitRepositoryWatcher
 
 		public GitListener(GitRepository gitRepository)
 		{
-			repository = gitRepository;
+			this.repository = gitRepository;
 		}
 
 		public void fileCreated(FileChangeEvent event) throws Exception
@@ -49,7 +50,6 @@ public class LocalGitRepositoryWatcher
 			File file = new File(fileObject.getName().getPathDecoded());
 			return file;
 		}
-
 	}
 
 	private final GitBoxConfiguration gitBoxConfiguration;
@@ -63,6 +63,7 @@ public class LocalGitRepositoryWatcher
 
 	public void start() throws WrappedGitBoxException
 	{
+		//TODO make a first scan of the work tree to add non comitted files
 		//TODO the delay gived to the monitor is : 1 second for every 1000 files processed ; so convert the user delay to this unit
 
 		try
@@ -71,12 +72,11 @@ public class LocalGitRepositoryWatcher
 			FileObject workTreeFolder = fsManager.resolveFile(gitRepository.getWorkTree().getAbsolutePath());
 			FileObject gitFolder = fsManager.resolveFile(gitRepository.getGitDirectory().getAbsolutePath());
 
-			DefaultFileMonitor fm = new DefaultFileMonitor(new GitListener(gitRepository));
+			FilterableFileMonitor fm = new FilterableFileMonitor(new GitListener(gitRepository), gitFolder);
 			fm.setRecursive(true);
 			long checkPeriod = gitBoxConfiguration.getDelayForLocalChangeCheckInSeconds();
 			fm.setDelay(TimeUnit.MILLISECONDS.convert(checkPeriod, TimeUnit.SECONDS));
 			fm.addFile(workTreeFolder);
-			fm.removeFile(gitFolder);
 			fm.start();
 
 		} catch (FileSystemException e)
