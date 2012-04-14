@@ -2,6 +2,10 @@ package com.mmounirou.gitbox;
 
 import javax.annotation.Nonnull;
 
+import com.mmounirou.gitbox.core.GitBoxConfiguration;
+import com.mmounirou.gitbox.core.GitRepository;
+import com.mmounirou.gitbox.core.LocalGitRepositoryWatcher;
+import com.mmounirou.gitbox.core.RemoteGitRepositoryWatcher;
 import com.mmounirou.gitbox.exception.GitBoxException;
 
 public class GitBox

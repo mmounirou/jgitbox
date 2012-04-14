@@ -1,9 +1,10 @@
-package com.mmounirou.gitbox;
+package com.mmounirou.gitbox.core;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
 import javax.annotation.Nonnull;
+
 
 public class RemoteGitRepositoryWatcher
 {

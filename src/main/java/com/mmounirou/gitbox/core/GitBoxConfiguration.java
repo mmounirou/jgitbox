@@ -1,4 +1,4 @@
-package com.mmounirou.gitbox;
+package com.mmounirou.gitbox.core;
 
 public class GitBoxConfiguration
 {

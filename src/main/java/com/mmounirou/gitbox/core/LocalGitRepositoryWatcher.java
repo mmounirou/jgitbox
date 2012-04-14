@@ -1,4 +1,4 @@
-package com.mmounirou.gitbox;
+package com.mmounirou.gitbox.core;
 
 import java.io.File;
 

@@ -1,8 +1,11 @@
-package com.mmounirou.gitbox;
+package com.mmounirou.gitbox.main;
 
 import java.io.File;
 import java.io.IOException;
 
+import com.mmounirou.gitbox.GitBox;
+import com.mmounirou.gitbox.core.GitBoxConfiguration;
+import com.mmounirou.gitbox.core.GitRepository;
 import com.mmounirou.gitbox.exception.GitBoxException;
 
 public class Main

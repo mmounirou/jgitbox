@@ -1,4 +1,4 @@
-package com.mmounirou.gitbox;
+package com.mmounirou.gitbox.core;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,6 +12,9 @@ import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.RefNotFoundException;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryBuilder;
+
+import com.mmounirou.gitbox.observers.GitRepositoryObservable;
+import com.mmounirou.gitbox.utils.GitBoxUtils;
 
 public class GitRepository extends GitRepositoryObservable
 {
