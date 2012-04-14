@@ -23,6 +23,8 @@ public class GitBox
 	public void start() throws GitBoxException
 	{
 		localGitWatcher.start();
+
+		//TODO activate only if a remote if specified
 		remoteGitWatcher.start();
 	}
 

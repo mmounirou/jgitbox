@@ -63,19 +63,20 @@ public class LocalGitRepositoryWatcher
 
 	public void start() throws WrappedGitBoxException
 	{
-		//TODO exclude git dir from monitoring
 		//TODO the delay gived to the monitor is : 1 second for every 1000 files processed ; so convert the user delay to this unit
 
 		try
 		{
 			FileSystemManager fsManager = VFS.getManager();
-			FileObject listendir = fsManager.resolveFile(gitRepository.getWorkTree().getAbsolutePath());
+			FileObject workTreeFolder = fsManager.resolveFile(gitRepository.getWorkTree().getAbsolutePath());
+			FileObject gitFolder = fsManager.resolveFile(gitRepository.getGitDirectory().getAbsolutePath());
 
 			DefaultFileMonitor fm = new DefaultFileMonitor(new GitListener(gitRepository));
 			fm.setRecursive(true);
 			long checkPeriod = gitBoxConfiguration.getDelayForLocalChangeCheckInSeconds();
 			fm.setDelay(TimeUnit.MILLISECONDS.convert(checkPeriod, TimeUnit.SECONDS));
-			fm.addFile(listendir);
+			fm.addFile(workTreeFolder);
+			fm.removeFile(gitFolder);
 			fm.start();
 
 		} catch (FileSystemException e)
