@@ -14,6 +14,7 @@ import org.apache.commons.configuration.ConfigurationException;
 import org.apache.log4j.Logger;
 import org.eclipse.jgit.lib.Constants;
 
+import com.google.common.util.concurrent.Monitor;
 import com.mmounirou.gitbox.GitBox;
 import com.mmounirou.gitbox.core.GitBoxConfiguration;
 import com.mmounirou.gitbox.core.GitRepository;
@@ -25,9 +26,9 @@ public class Main
 	private static Logger logger = Logger.getLogger(Main.class);
 
 	//@formatter:off
-	private static final Option WORK_TREE = OptionBuilder.isRequired().hasArg().withType(File.class).withLongOpt("work-tree").withDescription("git working directory").create("w");
-	private static final Option GIT_DIR = OptionBuilder.isRequired(false).hasArg().withType(File.class).withLongOpt("git-dir").withDescription("git directory").create("g");
-	private static final Option CONFIG_FILE = OptionBuilder.isRequired(false).hasArg().withType(File.class).withLongOpt("properties").withDescription("gitbox properties file").create("p");
+	private static final Option WORK_TREE = OptionBuilder.withLongOpt("work-tree").isRequired(true).hasArg(true).withType(File.class).withDescription("git working directory").create("w");
+	private static final Option GIT_DIR = OptionBuilder.withLongOpt("git-dir").isRequired(false).hasArg(true).withType(File.class).withDescription("git directory").create("g");
+	private static final Option CONFIG_FILE = OptionBuilder.withLongOpt("properties").isRequired(false).hasArg(true).withType(File.class).withDescription("gitbox properties file").create("p");
 	//@formatter:on
 
 	private static final Options OPTIONS = buildOptions();
@@ -80,6 +81,8 @@ public class Main
 
 			final GitBox gitbox = new GitBox(gitBoxConfiguration, gitRepository);
 			gitbox.start();
+			
+			new Monitor().enter();
 
 		} catch (ParseException e)
 		{
