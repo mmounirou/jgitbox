@@ -183,7 +183,7 @@ public class GitRepository extends GitRepositoryObservable
 					//TODO manage error during merge
 
 					final FetchMergeCommand fetchMergeCommand = new FetchMergeCommand(git.getRepository());
-					fetchMergeCommand.call();
+					fetchMergeCommand.fetch();
 
 					//apply the remotes changes to the local branch .
 					//this operation cannot be made concurrently with add/update/delete operations so
