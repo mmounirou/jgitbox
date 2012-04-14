@@ -5,6 +5,8 @@ import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import javax.annotation.Nonnull;
+
 import com.google.common.collect.Maps;
 
 public class GitRepositoryObservable
@@ -17,18 +19,18 @@ public class GitRepositoryObservable
 	// Notify each listener sequentially but in a separate thread
 	private final Map<GitRepositoryObserver, ExecutorService> listeners = Maps.newLinkedHashMap();
 
-	public void addListener(GitRepositoryObserver observer)
+	public void addListener(@Nonnull GitRepositoryObserver observer)
 	{
 		listeners.put(observer, Executors.newSingleThreadExecutor());
 	}
 
-	public void removeListener(GitRepositoryObserver observer)
+	public void removeListener(@Nonnull GitRepositoryObserver observer)
 	{
 		ExecutorService executorService = listeners.remove(observer);
 		executorService.shutdown();
 	}
 
-	protected void fireFileAdded(final File file)
+	protected void fireFileAdded(@Nonnull final File file)
 	{
 		notifyListeners(new CustomRunnable()
 		{
@@ -40,7 +42,7 @@ public class GitRepositoryObservable
 		});
 	}
 
-	protected void fireErrorDuringFileAdd(final File file, final Exception e)
+	protected void fireErrorDuringFileAdd(@Nonnull final File file, @Nonnull final Exception e)
 	{
 		notifyListeners(new CustomRunnable()
 		{
@@ -53,7 +55,7 @@ public class GitRepositoryObservable
 
 	}
 
-	protected void fireFileUpdated(final File file)
+	protected void fireFileUpdated(@Nonnull final File file)
 	{
 		notifyListeners(new CustomRunnable()
 		{
@@ -65,7 +67,7 @@ public class GitRepositoryObservable
 		});
 	}
 
-	protected void fireErrorDuringFileUpdate(final File file, final Exception e)
+	protected void fireErrorDuringFileUpdate(@Nonnull final File file, @Nonnull final Exception e)
 	{
 		notifyListeners(new CustomRunnable()
 		{
@@ -77,7 +79,7 @@ public class GitRepositoryObservable
 		});
 	}
 
-	protected void fireFileDeleted(final File file)
+	protected void fireFileDeleted(@Nonnull final File file)
 	{
 		notifyListeners(new CustomRunnable()
 		{
@@ -89,7 +91,7 @@ public class GitRepositoryObservable
 		});
 	}
 
-	protected void fireErrorDuringFileDelete(final File file, final Exception e)
+	protected void fireErrorDuringFileDelete(@Nonnull final File file, @Nonnull final Exception e)
 	{
 		notifyListeners(new CustomRunnable()
 		{
@@ -113,26 +115,26 @@ public class GitRepositoryObservable
 		});
 	}
 
-	protected void fireErrorPull(Exception e)
+	protected void fireErrorPull(@Nonnull final Exception e)
 	{
 		notifyListeners(new CustomRunnable()
 		{
 
 			public void run(GitRepositoryObserver listener)
 			{
-				listener.onErrorDuringPull();
+				listener.onErrorDuringPull(e);
 			}
 		});
 	}
 
-	protected void fireErrorDuringPush(Exception e)
+	protected void fireErrorDuringPush(@Nonnull final Exception e)
 	{
 		notifyListeners(new CustomRunnable()
 		{
 
 			public void run(GitRepositoryObserver listener)
 			{
-				listener.onErrorDuringPush();
+				listener.onErrorDuringPush(e);
 			}
 		});
 	}

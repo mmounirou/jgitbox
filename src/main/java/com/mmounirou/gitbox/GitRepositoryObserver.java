@@ -2,27 +2,29 @@ package com.mmounirou.gitbox;
 
 import java.io.File;
 
+import javax.annotation.Nonnull;
+
 public interface GitRepositoryObserver
 {
 
-	void onFileAdded(File file);
+	void onFileAdded(@Nonnull File file);
 
-	void onErrorDuringFileAdd(File file, Exception e);
+	void onErrorDuringFileAdd(@Nonnull File file, @Nonnull Exception e);
 
-	void onFileUpdated(File file);
+	void onFileUpdated(@Nonnull File file);
 
-	void onErrorDuringFileUpdate(File file, Exception e);
+	void onErrorDuringFileUpdate(@Nonnull File file, @Nonnull Exception e);
 
-	void onFileDeleted(File file);
+	void onFileDeleted(@Nonnull File file);
 
-	void onErrorDuringFileDelete(File file, Exception e);
+	void onErrorDuringFileDelete(@Nonnull File file, @Nonnull Exception e);
 
 	void onPull();
 
-	void onErrorDuringPull();
+	void onErrorDuringPull(@Nonnull Exception exception);
 
 	void onPush();
 
-	void onErrorDuringPush();
+	void onErrorDuringPush(@Nonnull Exception exception);
 
 }

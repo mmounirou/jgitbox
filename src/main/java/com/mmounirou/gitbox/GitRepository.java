@@ -31,7 +31,7 @@ public class GitRepository extends GitRepositoryObservable
 		this.workTree = workTree;
 	}
 
-	public void addFile(final File file)
+	public void addFile(@Nonnull final File file)
 	{
 		executorService.execute(new Runnable()
 		{
@@ -62,7 +62,7 @@ public class GitRepository extends GitRepositoryObservable
 		});
 	}
 
-	public void updateFile(final File file)
+	public void updateFile(@Nonnull final File file)
 	{
 		executorService.execute(new Runnable()
 		{
@@ -92,7 +92,7 @@ public class GitRepository extends GitRepositoryObservable
 		});
 	}
 
-	public void deleteFile(final File file)
+	public void deleteFile(@Nonnull final File file)
 	{
 		executorService.execute(new Runnable()
 		{
@@ -133,7 +133,7 @@ public class GitRepository extends GitRepositoryObservable
 		return gitDirectory;
 	}
 
-	public void push(String strRemote)
+	public void push()
 	{
 
 		//don't execute an push and a pull //

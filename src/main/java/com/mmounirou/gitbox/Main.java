@@ -17,12 +17,12 @@ public class Main
 	{
 		File gitDir = new File("");
 		File workTree = new File("");
-		String strRemote = "";
+
 
 		final GitRepository gitRepository = new GitRepository(gitDir, workTree);
 
 		final GitBoxConfiguration gitBoxConfiguration = new GitBoxConfiguration();
-		final GitBox gitbox = new GitBox(gitBoxConfiguration, gitRepository, strRemote);
+		final GitBox gitbox = new GitBox(gitBoxConfiguration, gitRepository);
 
 		gitbox.start();
 

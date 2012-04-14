@@ -42,7 +42,8 @@ public class LocalGitRepositoryWatcher
 			repository.updateFile(toFile(event));
 		}
 
-		private File toFile(FileChangeEvent event) throws FileSystemException
+		
+		private File toFile(@Nonnull FileChangeEvent event) throws FileSystemException
 		{
 			FileObject fileObject = event.getFile();
 			File file = new File(fileObject.getName().getPathDecoded());

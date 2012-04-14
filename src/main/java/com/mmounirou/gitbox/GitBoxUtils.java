@@ -2,8 +2,15 @@ package com.mmounirou.gitbox;
 
 import java.io.File;
 
-public class GitBoxUtils
+import javax.annotation.Nonnull;
+
+public final class GitBoxUtils
 {
+
+	private GitBoxUtils()
+	{
+		throw new AssertionError();
+	}
 
 	/**
 	 * Note : that method will work only if file to relativize is child of file to relativize to
@@ -11,7 +18,7 @@ public class GitBoxUtils
 	 * @param parent
 	 * @return
 	 */
-	public static String getRelativePath(File file, File parent)
+	public static String getRelativePath(@Nonnull File file, @Nonnull File parent)
 	{
 		return parent.toURI().relativize(file.toURI()).getPath();
 	}

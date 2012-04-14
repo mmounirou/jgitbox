@@ -12,20 +12,18 @@ public class RemoteGitRepositoryWatcher
 	{
 
 		private final GitRepository repository;
-		private final String strRemote;
 
-		public PushTask(GitRepository gitRepository, String remoteName)
+		public PushTask(GitRepository gitRepository)
 		{
 			// TODO send remotely only one commit
 
 			repository = gitRepository;
-			strRemote = remoteName;
 		}
 
 		@Override
 		public void run()
 		{
-			repository.push(strRemote);
+			repository.push();
 		}
 
 	}
@@ -50,15 +48,13 @@ public class RemoteGitRepositoryWatcher
 
 	private final GitBoxConfiguration gitBoxConfiguration;
 	private final GitRepository gitRepository;
-	private final String remoteName;
 
-	public RemoteGitRepositoryWatcher(@Nonnull GitBoxConfiguration gitBoxConfiguration, GitRepository gitRepository, @Nonnull String remoteName)
+	public RemoteGitRepositoryWatcher(@Nonnull GitBoxConfiguration gitBoxConfiguration, GitRepository gitRepository)
 	{
 		// TODO ensure that the specified remote is well configured
 
 		this.gitBoxConfiguration = gitBoxConfiguration;
 		this.gitRepository = gitRepository;
-		this.remoteName = remoteName;
 	}
 
 	public void start()
@@ -69,7 +65,7 @@ public class RemoteGitRepositoryWatcher
 		pullTimer.scheduleAtFixedRate(pullTask, 0, pullPeriod);
 
 		Timer pushTimer = new Timer(true);
-		TimerTask pushTask = new PushTask(gitRepository, remoteName);
+		TimerTask pushTask = new PushTask(gitRepository);
 		long pushPeriod = gitBoxConfiguration.getPushPeriod();
 		pushTimer.scheduleAtFixedRate(pushTask, 0, pushPeriod);
 
