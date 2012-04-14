@@ -10,10 +10,10 @@ public class GitBox
 	private final LocalGitRepositoryWatcher localGitWatcher;
 	private RemoteGitRepositoryWatcher remoteGitWatcher;
 
-	public GitBox(@Nonnull GitBoxConfiguration gitBoxConfiguration, @Nonnull GitRepository gitRepository)
+	public GitBox(@Nonnull GitBoxConfiguration gitBoxConfiguration, @Nonnull GitRepository gitRepository, @Nonnull String strRemote)
 	{
 		this.localGitWatcher = new LocalGitRepositoryWatcher(gitBoxConfiguration, gitRepository);
-		this.remoteGitWatcher = new RemoteGitRepositoryWatcher(gitBoxConfiguration, gitRepository);
+		this.remoteGitWatcher = new RemoteGitRepositoryWatcher(gitBoxConfiguration, gitRepository, strRemote);
 	}
 
 	public void start() throws GitBoxException

@@ -9,4 +9,16 @@ public class GitBoxConfiguration
 		return 0;
 	}
 
+	public long getPullPeriod()
+	{
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public long getPushPeriod()
+	{
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

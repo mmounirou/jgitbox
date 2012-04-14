@@ -101,6 +101,30 @@ public class GitRepositoryObservable
 		});
 	}
 
+	protected void firePull()
+	{
+		notifyListeners(new CustomRunnable()
+		{
+
+			public void run(GitRepositoryObserver listener)
+			{
+				listener.onPull();
+			}
+		});
+	}
+
+	protected void fireErrorPull(Exception e)
+	{
+		notifyListeners(new CustomRunnable()
+		{
+
+			public void run(GitRepositoryObserver listener)
+			{
+				listener.onErrorDuringPull();
+			}
+		});
+	}
+
 	private void notifyListeners(final CustomRunnable command)
 	{
 		for (final GitRepositoryObserver listener : listeners.keySet())

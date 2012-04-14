@@ -7,14 +7,17 @@ import java.util.concurrent.Executors;
 
 import javax.annotation.Nonnull;
 
+import org.eclipse.jgit.api.FetchMergeCommand;
 import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.errors.RefNotFoundException;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryBuilder;
 
 public class GitRepository extends GitRepositoryObservable
 {
 	private final ExecutorService executorService = Executors.newSingleThreadExecutor();
-	
+	private final ExecutorService remoteExecutorService = Executors.newSingleThreadExecutor();
+
 	private final Git git;
 	private final File gitDirectory;
 	private final File workTree;
@@ -101,6 +104,7 @@ public class GitRepository extends GitRepositoryObservable
 					// TODO check that the file is in the workTree;
 					// TODO check that the file is not too big for auto-commit
 					// TODO check if the file is a directory
+					// TODO make a commit before deletion if the file is already tracked
 
 					String strRelativePath = GitBoxUtils.getRelativePath(file, workTree);
 					git.rm().addFilepattern(strRelativePath).call();
@@ -129,4 +133,57 @@ public class GitRepository extends GitRepositoryObservable
 		return gitDirectory;
 	}
 
+	public void push(String strRemote)
+	{
+		// TODO Auto-generated method stub
+
+	}
+
+	public void pull()
+	{
+		//Use an another thread to fetch the remote refs .
+		//this operation can be made // to the local add/update/delete operations
+		remoteExecutorService.execute(new Runnable()
+		{
+			public void run()
+			{
+				try
+				{
+					//TODO manage error during merge
+
+					final FetchMergeCommand fetchMergeCommand = new FetchMergeCommand(git.getRepository());
+					fetchMergeCommand.call();
+
+					//apply the remotes changes to the local branch .
+					//this operation cannot be made concurrently with add/update/delete operations so
+					//use the localExecutorService to schedule this merge
+					executorService.execute(new Runnable()
+					{
+
+						public void run()
+						{
+							try
+							{
+								fetchMergeCommand.applyLocally();
+
+								//TODO provide more information about pull result : or use local notif to provide info on remote modification
+								firePull();
+							} catch (RefNotFoundException e)
+							{
+								fireErrorPull(e);
+							}
+						}
+
+					});
+
+				} catch (RuntimeException e)
+				{
+					throw e;
+				} catch (Exception e)
+				{
+					fireErrorPull(e);
+				}
+			}
+		});
+	}
 }

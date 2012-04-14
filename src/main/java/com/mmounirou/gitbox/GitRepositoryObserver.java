@@ -17,4 +17,8 @@ public interface GitRepositoryObserver
 
 	void onErrorDuringFileDelete(File file, Exception e);
 
+	void onPull();
+
+	void onErrorDuringPull();
+
 }
