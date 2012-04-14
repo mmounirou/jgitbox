@@ -5,6 +5,24 @@
 	<artifactId>gitbox</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
+	<name>GitBox</name>
+	<url>https://github.com/mmounirou/gitbox</url>
+	<description>A JGit based dropbox</description>
+	<scm>
+		<url>https://github.com/mmounirou/gitbox</url>
+		<connection>git@github.com:mmounirou/gitbox.git</connection>
+		<developerConnection>git@github.com:mmounirou/gitbox.git</developerConnection>
+	</scm>
+	<issueManagement>
+		<system>github</system>
+		<url>https://github.com/mmounirou/gitbox/issues</url>
+	</issueManagement>
+	<ciManagement>
+		<system>jenkins</system>
+		<url>http://jenkins.mmounirou.com/job/gitbox/</url>
+	</ciManagement>
+
+
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
