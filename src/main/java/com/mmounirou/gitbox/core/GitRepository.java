@@ -30,12 +30,27 @@ public class GitRepository extends GitRepositoryObservable
 
 	public GitRepository(@Nonnull File gitDirectory, @Nonnull File workTree) throws IOException
 	{
-		logger.debug(String.format("Init git repository in %s:%s", workTree.getAbsolutePath(), gitDirectory.getAbsolutePath()));
+
+		logger.debug(String.format("Load the git repository %s:%s ...", workTree.getAbsolutePath(), gitDirectory.getAbsolutePath()));
 		Repository repository = new RepositoryBuilder().setGitDir(gitDirectory).setWorkTree(workTree).readEnvironment().findGitDir().build();
+		createRepositoryIfNotExist(gitDirectory, repository);
+		logger.debug(String.format("the git repository loaded", workTree.getAbsolutePath(), gitDirectory.getAbsolutePath()));
 
 		this.git = new Git(repository);
 		this.gitDirectory = gitDirectory;
 		this.workTree = workTree;
+
+		
+	}
+
+	private void createRepositoryIfNotExist(File gitDir,Repository repo) throws IOException
+	{
+		if (!gitDir.exists() || gitDir.list().length == 0)
+		{
+			logger.info("create the git repository ...");
+			repo.create();
+			logger.info("the repository created");
+		}
 	}
 
 	public void addFile(@Nonnull final File file)
