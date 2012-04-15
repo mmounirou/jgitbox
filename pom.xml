@@ -9,9 +9,9 @@
 	<url>https://github.com/mmounirou/gitbox</url>
 	<description>A JGit based dropbox</description>
 	<scm>
-		<url>https://github.com/mmounirou/gitbox</url>
-		<connection>git@github.com:mmounirou/gitbox.git</connection>
-		<developerConnection>git@github.com:mmounirou/gitbox.git</developerConnection>
+		<connection>scm:git:git@github.com:mmounirou/gitbox.git</connection>
+		<url>scm:git:git@github.com:mmounirou/gitbox.git</url>
+		<developerConnection>scm:git:git@github.com:mmounirou/gitbox.git</developerConnection>
 	</scm>
 	<issueManagement>
 		<system>github</system>
