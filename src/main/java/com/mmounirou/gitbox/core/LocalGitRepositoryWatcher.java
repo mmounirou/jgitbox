@@ -71,7 +71,10 @@ public class LocalGitRepositoryWatcher
 			FileObject workTreeFolder = fsManager.resolveFile(gitRepository.getWorkTree().getAbsolutePath());
 			FileObject gitFolder = fsManager.resolveFile(gitRepository.getGitDirectory().getAbsolutePath());
 
-			FilterableFileMonitor fm = new FilterableFileMonitor(new GitListener(gitRepository), gitFolder);
+			FilterableFileMonitor fm = new FilterableFileMonitor(new GitListener(gitRepository));
+			fm.exclude(gitFolder);
+			fm.excludeInInitialScanNotif(workTreeFolder);
+			
 			fm.setRecursive(true);
 			long checkPeriod = gitBoxConfiguration.getDelayForLocalChangeCheckInSeconds();
 			fm.setDelay(TimeUnit.MILLISECONDS.convert(checkPeriod, TimeUnit.SECONDS));
