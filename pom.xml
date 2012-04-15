@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.mmounirou.jgitbox</groupId>
 	<artifactId>jgitbox</artifactId>
-	<version>0.2-SNAPSHOT</version>
+	<version>0.3-SNAPSHOT</version>
 
 	<name>JGitBox</name>
 	<url>https://github.com/mmounirou/jgitbox</url>
