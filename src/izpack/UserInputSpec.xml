@@ -2,7 +2,7 @@
 <userInput>
 	<!-- Install -->
 	<panel order="0">
-		<field type="staticText" align="left" txt="Choose your GitBox folder" />
+		<field type="staticText" align="left" txt="Choose your JGitBox folder" />
 		<field type="dir" align="left" variable="worktree">
 			<spec txt="" size="25" mustExist="true" create="true" />
 		</field>

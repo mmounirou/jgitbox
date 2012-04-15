@@ -12,7 +12,7 @@
 		<authors>
 			<author name="${user.name}" email="mmounirou@mmounirou.com" />
 		</authors>
-		<url>https://github.com/mmounirou/gitbox</url>
+		<url>https://github.com/mmounirou/jgitbox</url>
 	</info>
 
 	<!-- The gui preferences indication. Sets the installer window to 640x480. 
@@ -31,7 +31,7 @@
 	</resources>
 
 	<dynamicvariables>
-		<variable name="gitbox-version" value="@{project.version}" />
+		<variable name="jgitbox-version" value="@{project.version}" />
 	</dynamicvariables>
 
 	<!-- The panels section. We indicate here which panels we want to use. The 
@@ -48,10 +48,10 @@
 
 	<!-- The packs section. We specify here our packs. -->
 	<packs>
-		<pack name="gitbox" required="yes">
-			<description>GitBox App</description>
-			<file src="gitbox-@{project.version}.jar" targetdir="$INSTALL_PATH" />
-			<file src="gitbox.properties" targetdir="$INSTALL_PATH/config/" />
+		<pack name="jgitbox" required="yes">
+			<description>JGitBox App</description>
+			<file src="jgitbox-@{project.version}.jar" targetdir="$INSTALL_PATH" />
+			<file src="jgitbox.properties" targetdir="$INSTALL_PATH/config/" />
 			<file src="startup.bat" targetdir="$INSTALL_PATH/bin/" os="windows" />
 			<file src="startup.sh" targetdir="$INSTALL_PATH/bin" os="unix" />
 

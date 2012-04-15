@@ -1,4 +1,4 @@
-package com.mmounirou.gitbox.core;
+package com.mmounirou.jgitbox.core;
 
 import java.io.File;
 import java.io.IOException;

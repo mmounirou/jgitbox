@@ -1,4 +1,4 @@
-package com.mmounirou.gitbox.core;
+package com.mmounirou.jgitbox.core;
 
 import java.io.File;
 import java.util.concurrent.TimeUnit;
@@ -13,7 +13,7 @@ import org.apache.commons.vfs2.FileSystemManager;
 import org.apache.commons.vfs2.VFS;
 import org.apache.commons.vfs2.impl.FilterableFileMonitor;
 
-import com.mmounirou.gitbox.exception.WrappedGitBoxException;
+import com.mmounirou.jgitbox.exception.WrappedGitBoxException;
 
 public class LocalGitRepositoryWatcher
 {
