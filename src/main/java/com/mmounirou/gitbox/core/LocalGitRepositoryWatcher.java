@@ -11,9 +11,9 @@ import org.apache.commons.vfs2.FileObject;
 import org.apache.commons.vfs2.FileSystemException;
 import org.apache.commons.vfs2.FileSystemManager;
 import org.apache.commons.vfs2.VFS;
+import org.apache.commons.vfs2.impl.FilterableFileMonitor;
 
 import com.mmounirou.gitbox.exception.WrappedGitBoxException;
-import com.mmounirou.gitbox.utils.FilterableFileMonitor;
 
 public class LocalGitRepositoryWatcher
 {
@@ -63,7 +63,6 @@ public class LocalGitRepositoryWatcher
 
 	public void start() throws WrappedGitBoxException
 	{
-		//TODO make a first scan of the work tree to add non comitted files
 		//TODO the delay gived to the monitor is : 1 second for every 1000 files processed ; so convert the user delay to this unit
 
 		try
