@@ -24,7 +24,6 @@ public class GitBox
 	{
 		localGitWatcher.start();
 
-		//TODO activate only if a remote if specified
 		remoteGitWatcher.start();
 	}
 

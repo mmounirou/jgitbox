@@ -16,6 +16,7 @@ import org.eclipse.jgit.lib.RepositoryBuilder;
 
 import com.mmounirou.gitbox.observers.GitRepositoryObservable;
 import com.mmounirou.gitbox.utils.GitBoxUtils;
+import com.mmounirou.gitbox.utils.GitUtils;
 
 public class GitRepository extends GitRepositoryObservable
 {
@@ -40,10 +41,9 @@ public class GitRepository extends GitRepositoryObservable
 		this.gitDirectory = gitDirectory;
 		this.workTree = workTree;
 
-		
 	}
 
-	private void createRepositoryIfNotExist(File gitDir,Repository repo) throws IOException
+	private void createRepositoryIfNotExist(File gitDir, Repository repo) throws IOException
 	{
 		if (!gitDir.exists() || gitDir.list().length == 0)
 		{
@@ -177,6 +177,13 @@ public class GitRepository extends GitRepositoryObservable
 
 	public void push()
 	{
+		//Run only if a remote is configured
+		if (!haveRemote())
+		{
+			logger.debug(String.format("cancel the push : there are no remote configured"));
+			return;
+		}
+
 		logger.debug(String.format("schedule push"));
 		//don't execute an push and a pull //
 		remoteExecutorService.execute(new Runnable()
@@ -212,8 +219,20 @@ public class GitRepository extends GitRepositoryObservable
 
 	}
 
+	private boolean haveRemote()
+	{
+		return GitUtils.haveRemote(git.getRepository());
+	}
+
 	public void pull()
 	{
+		//Run only if a remote is configured
+		if (!haveRemote())
+		{
+			logger.debug(String.format("cancel the pull : there are no remote configured"));
+			return;
+		}
+
 		logger.debug(String.format("schedule pull"));
 
 		//Use an another thread to fetch the remote refs .
