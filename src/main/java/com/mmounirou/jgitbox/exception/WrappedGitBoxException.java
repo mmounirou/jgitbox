@@ -1,4 +1,4 @@
-package com.mmounirou.gitbox.exception;
+package com.mmounirou.jgitbox.exception;
 
 public class WrappedGitBoxException extends GitBoxException
 {

@@ -1,24 +1,24 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.mmounirou.gitbox</groupId>
-	<artifactId>gitbox</artifactId>
-	<version>0.1</version>
+	<groupId>com.mmounirou.jgitbox</groupId>
+	<artifactId>jgitbox</artifactId>
+	<version>0.2</version>
 
-	<name>GitBox</name>
-	<url>https://github.com/mmounirou/gitbox</url>
+	<name>JGitBox</name>
+	<url>https://github.com/mmounirou/jgitbox</url>
 	<description>A JGit based dropbox</description>
 	<scm>
-		<connection>scm:git:git@github.com:mmounirou/gitbox.git</connection>
-		<url>scm:git:git@github.com:mmounirou/gitbox.git</url>
-		<developerConnection>scm:git:git@github.com:mmounirou/gitbox.git</developerConnection>
+		<connection>scm:git:git@github.com:mmounirou/jgitbox.git</connection>
+		<url>scm:git:git@github.com:mmounirou/jgitbox.git</url>
+		<developerConnection>scm:git:git@github.com:mmounirou/jgitbox.git</developerConnection>
 	</scm>
 	<issueManagement>
 		<system>github</system>
-		<url>https://github.com/mmounirou/gitbox/issues</url>
+		<url>https://github.com/mmounirou/jgitbox/issues</url>
 	</issueManagement>
 	<ciManagement>
 		<system>jenkins</system>
-		<url>http://jenkins.mmounirou.com/job/gitbox/</url>
+		<url>http://jenkins.mmounirou.com/job/jgitbox/</url>
 	</ciManagement>
 
 	<properties>

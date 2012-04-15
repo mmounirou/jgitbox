@@ -1,4 +1,4 @@
-package com.mmounirou.gitbox.observers;
+package com.mmounirou.jgitbox.observers;
 
 import java.io.File;
 

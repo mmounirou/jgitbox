@@ -1,4 +1,4 @@
-package com.mmounirou.gitbox.core;
+package com.mmounirou.jgitbox.core;
 
 import java.util.Timer;
 import java.util.TimerTask;

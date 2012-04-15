@@ -1,4 +1,4 @@
-package com.mmounirou.gitbox.main;
+package com.mmounirou.jgitbox.main;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,11 +15,11 @@ import org.apache.log4j.Logger;
 import org.eclipse.jgit.lib.Constants;
 
 import com.google.common.util.concurrent.Monitor;
-import com.mmounirou.gitbox.GitBox;
-import com.mmounirou.gitbox.core.GitBoxConfiguration;
-import com.mmounirou.gitbox.core.GitRepository;
-import com.mmounirou.gitbox.exception.GitBoxException;
-import com.mmounirou.gitbox.observers.LogObserver;
+import com.mmounirou.jgitbox.JGitBox;
+import com.mmounirou.jgitbox.core.GitBoxConfiguration;
+import com.mmounirou.jgitbox.core.GitRepository;
+import com.mmounirou.jgitbox.exception.GitBoxException;
+import com.mmounirou.jgitbox.observers.LogObserver;
 
 @SuppressWarnings("static-access")
 public class Main
@@ -80,7 +80,7 @@ public class Main
 			final GitRepository gitRepository = new GitRepository(gitDir, workTree);
 			gitRepository.addObserver(new LogObserver());
 
-			final GitBox gitbox = new GitBox(gitBoxConfiguration, gitRepository);
+			final JGitBox gitbox = new JGitBox(gitBoxConfiguration, gitRepository);
 			gitbox.start();
 			
 			new Monitor().enter();
