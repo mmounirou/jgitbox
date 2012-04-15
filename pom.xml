@@ -22,7 +22,6 @@
 		<url>http://jenkins.mmounirou.com/job/gitbox/</url>
 	</ciManagement>
 
-
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
@@ -184,6 +183,9 @@
 						<goals>
 							<goal>izpack</goal>
 						</goals>
+						<configuration>
+							<installerFile>${project.build.directory}/${project.build.finalName}-installer.jar</installerFile>
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>
