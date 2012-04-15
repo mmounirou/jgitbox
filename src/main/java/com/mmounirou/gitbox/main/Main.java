@@ -19,6 +19,7 @@ import com.mmounirou.gitbox.GitBox;
 import com.mmounirou.gitbox.core.GitBoxConfiguration;
 import com.mmounirou.gitbox.core.GitRepository;
 import com.mmounirou.gitbox.exception.GitBoxException;
+import com.mmounirou.gitbox.observers.LogObserver;
 
 @SuppressWarnings("static-access")
 public class Main

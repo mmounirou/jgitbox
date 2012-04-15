@@ -1,4 +1,4 @@
-package com.mmounirou.gitbox.main;
+package com.mmounirou.gitbox.observers;
 
 import java.io.File;
 
@@ -6,7 +6,6 @@ import javax.annotation.Nonnull;
 
 import org.apache.log4j.Logger;
 
-import com.mmounirou.gitbox.observers.GitRepositoryObserver;
 
 public class LogObserver implements GitRepositoryObserver
 {
