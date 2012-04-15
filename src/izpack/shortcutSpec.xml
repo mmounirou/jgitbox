@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<shortcuts>
+    <skipIfNotSupported/>
+    <programGroup defaultName="GitBox" location="applications"/>
+    
+    <shortcut
+        name="Gitbox Windows"
+        programGroup="yes"
+        desktop="yes"
+        applications="no"
+        startMenu="no"
+        startup="no"
+        target="$INSTALL_PATH\bin\startup.bat"
+        commandLine=""
+        description="Spark"
+        iconIndex="0"
+        initialState="noShow">
+        <createForPack name="gitbox"/>
+    </shortcut>
+    
+    <shortcut
+     name="GitBox Linux"
+     programGroup="yes"
+     desktop="yes"
+     applications="no"
+     startMenu="yes"
+     startup="no"
+     target="$INSTALL_PATH/bin/startup.sh"
+     commandLine=""
+     workingDirectory="$INSTALL_PATH/bin"
+     description="GitBox"
+     type="Application"
+     encoding="UTF-8"
+     terminal="true"
+     KdeSubstUID="false"
+     initialState="normal">
+     <createForPack name="gitbox"/>
+   </shortcut>
+</shortcuts>

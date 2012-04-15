@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+
+<installation version="1.0">
+
+	<!-- The info section. The meaning of the tags should be natural ... -->
+	<info>
+		<appname>@{project.name}</appname>
+		<appversion>@{project.version}</appversion>
+		<javaversion>1.5</javaversion>
+		<uninstaller name="remove.task" path="${INSTALL_PATH}/Uninstall"
+			write="yes" />
+		<authors>
+			<author name="${user.name}" email="mmounirou@mmounirou.com" />
+		</authors>
+		<url>https://github.com/mmounirou/gitbox</url>
+	</info>
+
+	<!-- The gui preferences indication. Sets the installer window to 640x480. 
+		It will not be able to change the size. -->
+	<guiprefs width="640" height="480" resizable="no" />
+
+	<!-- The locale section. Asks here to include the English and French langpacks. -->
+	<locale>
+		<langpack iso3="eng" />
+		<langpack iso3="fra" />
+	</locale>
+
+	<resources>
+		<res id="userInputSpec.xml" src="userInputSpec.xml" />
+	    <res id="shortcutSpec.xml" src="shortcutSpec.xml" />
+	</resources>
+
+	<dynamicvariables>
+		<variable name="gitbox-version" value="@{project.version}" />
+	</dynamicvariables>
+
+	<!-- The panels section. We indicate here which panels we want to use. The 
+		order will be respected. -->
+	<panels>
+		<panel classname="UserInputPanel" />
+		<panel classname="PacksPanel" />
+		<panel classname="InstallPanel" />
+		<panel classname="ShortcutPanel" />
+		<panel classname="FinishPanel" />
+	</panels>
+
+	<jar src="libs/plexus-utils.jar" />
+
+	<!-- The packs section. We specify here our packs. -->
+	<packs>
+		<pack name="gitbox" required="yes">
+			<description>GitBox App</description>
+			<file src="gitbox-@{project.version}.jar" targetdir="$INSTALL_PATH" />
+			<file src="gitbox.properties" targetdir="$INSTALL_PATH/config/" />
+			<file src="startup.bat" targetdir="$INSTALL_PATH/bin/" os="windows" />
+			<file src="startup.sh" targetdir="$INSTALL_PATH/bin" os="unix" />
+
+			<parsable targetfile="$INSTALL_PATH/bin/startup.bat" os="windows" />
+			<parsable targetfile="$INSTALL_PATH/bin/startup.sh" os="unix"/>
+
+			<executable targetfile="$INSTALL_PATH/bin/startup.bat" os="windows" />
+			<executable targetfile="$INSTALL_PATH/bin/startup.sh" os="unix"/>
+
+		</pack>
+		<pack name="dependencies" required="yes">
+			<description>GitBox Dependencies</description>
+			<file src="libs" targetdir="$INSTALL_PATH" />
+		</pack>
+	</packs>
+</installation>
