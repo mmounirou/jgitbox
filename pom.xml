@@ -1,9 +1,8 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.mmounirou.gitbox</groupId>
 	<artifactId>gitbox</artifactId>
-	<version>0.1-SNAPSHOT</version>
+	<version>0.2-SNAPSHOT</version>
 
 	<name>GitBox</name>
 	<url>https://github.com/mmounirou/gitbox</url>
@@ -21,6 +20,12 @@
 		<system>jenkins</system>
 		<url>http://jenkins.mmounirou.com/job/gitbox/</url>
 	</ciManagement>
+
+	<properties>
+		<staging.dir>${project.build.directory}/staging</staging.dir>
+		<izpack-standalone.version>4.3.1</izpack-standalone.version>
+	</properties>
+
 
 	<dependencyManagement>
 		<dependencies>
@@ -189,11 +194,12 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>2.2.2</version>
+			</plugin>
 		</plugins>
 	</build>
-	<properties>
-		<staging.dir>${project.build.directory}/staging</staging.dir>
-		<izpack-standalone.version>4.3.1</izpack-standalone.version>
-	</properties>
 
 </project>
